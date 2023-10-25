@@ -21,10 +21,11 @@ const Home = () => {
     } catch (error) {
       alert('Failed to download pizzas:(');
     }
+    window.scrollTo(0, 0);
   }, []);
 
   return (
-    <>
+    <div className="container">
       <div className="content__top">
         <Categories />
         <Sort />
@@ -38,7 +39,7 @@ const Home = () => {
               return <PizzaBLock key={obj.id} {...obj} />;
             })}
       </div>
-    </>
+    </div>
   );
 };
 
