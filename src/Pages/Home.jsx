@@ -1,23 +1,35 @@
 import React, { useContext, useEffect, useState } from 'react';
+import qs from 'qs';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import Categories from '../components/Categories';
-import Sort from '../components/Sort';
+import Sort, { list } from '../components/Sort';
 import PizzaBLock from '../components/PizzaBlock/PizzaBLock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination/Pagination';
 import { AppContext } from '../App';
-import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
+
+import {
+  setCategoryId,
+  setCurrentPage,
+  setFilters,
+} from '../redux/slices/filterSlice';
+import { useRef } from 'react';
 
 const Home = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { categoryId, sort, orderType, currentPage } = useSelector(
     (state) => state.filter
   );
   const { searchValue } = useContext(AppContext);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const isSearch = useRef(false);
+  const isMounted = useRef(false);
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -27,10 +39,11 @@ const Home = () => {
     dispatch(setCurrentPage(number));
   };
 
-  useEffect(() => {
+  const fetchPizzas = () => {
     setIsLoading(true);
 
     const category = categoryId > 0 ? `&category=${categoryId}` : '';
+
     try {
       axios
         .get(
@@ -44,6 +57,43 @@ const Home = () => {
       alert('Failed to download pizzas:(');
     }
     window.scrollTo(0, 0);
+  };
+
+  useEffect(() => {
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sortProperty: sort.sortProperty,
+        categoryId,
+        currentPage,
+      });
+
+      navigate(`?${queryString}`);
+    }
+    isMounted.current = true;
+  }, [categoryId, sort, currentPage]);
+
+  useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+
+      const sort = list.find((obj) => obj.sortProperty === params.sortProperty);
+
+      dispatch(
+        setFilters({
+          ...params,
+          sort,
+        })
+      );
+      isSearch.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isSearch.current) {
+      fetchPizzas();
+    }
+
+    isSearch.current = false;
   }, [categoryId, sort, currentPage, orderType]);
 
   const pizzas = items
