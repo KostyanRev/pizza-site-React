@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setSortType, setOrderType } from '../redux/slices/filterSlice';
-import { click } from '@testing-library/user-event/dist/click';
+import {
+  setSortType,
+  setOrderType,
+  selectFilter,
+} from '../redux/slices/filterSlice';
 
 export const list = [
   { name: 'популярности', sortProperty: 'rating' },
@@ -12,7 +15,7 @@ export const list = [
 
 const Sort = () => {
   const dispatch = useDispatch();
-  const { sort, orderType } = useSelector((state) => state.filter);
+  const { sort, orderType } = useSelector(selectFilter);
 
   const [open, setOpen] = useState(false);
   const sortRef = useRef();
