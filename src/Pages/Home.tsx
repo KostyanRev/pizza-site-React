@@ -30,8 +30,8 @@ const Home: React.FC = () => {
     dispatch(setCategoryId(id));
   };
 
-  const onChangePage = (number: number) => {
-    dispatch(setCurrentPage(number));
+  const onChangePage = (value: number) => {
+    dispatch(setCurrentPage(value));
   };
 
   const getPizzas = async () => {
