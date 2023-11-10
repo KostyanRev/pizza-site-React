@@ -11,14 +11,13 @@ import Pagination from '../components/Pagination/Pagination';
 
 import {
   selectFilter,
-  selectSearchValue,
   setCategoryId,
   setCurrentPage,
   setFilters,
 } from '../redux/slices/filterSlice';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { items, status } = useSelector(selectPizzaData);
@@ -27,11 +26,11 @@ const Home = () => {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const onChangeCategory = (id) => {
+  const onChangeCategory = (id: number) => {
     dispatch(setCategoryId(id));
   };
 
-  const onChangePage = (number) => {
+  const onChangePage = (number: number) => {
     dispatch(setCurrentPage(number));
   };
 
@@ -40,6 +39,7 @@ const Home = () => {
     const sortBy = sort.sortProperty;
 
     dispatch(
+      //@ts-ignore
       fetchPizzas({
         orderType,
         category,
@@ -89,13 +89,13 @@ const Home = () => {
   }, [categoryId, sort, currentPage, orderType]);
 
   const pizzas = items
-    .filter((item) => {
+    .filter((item: any) => {
       if (item.title.toLowerCase().includes(searchValue.toLowerCase())) {
         return true;
       }
       return false;
     })
-    .map((obj) => <PizzaBLock key={obj.id} {...obj} />);
+    .map((obj: any) => <PizzaBLock key={obj.id} {...obj} />);
 
   const skeletons = [...new Array(6)].map((_, idx) => <Skeleton key={idx} />);
 
