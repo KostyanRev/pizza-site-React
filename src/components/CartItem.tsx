@@ -27,7 +27,7 @@ const CartItem: React.FC<CartItemProps> = ({
       type,
       size,
     };
-    dispatch(addItem(item));
+    dispatch(addItem(item as CartItemProps));
   };
 
   const onClickMinus = () => {
@@ -36,7 +36,7 @@ const CartItem: React.FC<CartItemProps> = ({
       type,
       size,
     };
-    dispatch(minusItem(item));
+    dispatch(minusItem(item as CartItemProps));
   };
 
   const onClickRemove = () => {
@@ -46,7 +46,7 @@ const CartItem: React.FC<CartItemProps> = ({
       size,
     };
     if (window.confirm('Are you sure want to remove?')) {
-      dispatch(removeItem(item));
+      dispatch(removeItem(item as CartItemProps));
     }
   };
 

@@ -1,6 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
-const initialState = {
+export type CartItem = {
+  title: string;
+  type: string;
+  size: number;
+  imageUrl: string;
+  count: number;
+  price: number;
+};
+
+interface CartSliceState {
+  totalPrice: number;
+  items: CartItem[];
+}
+
+const initialState: CartSliceState = {
   totalPrice: 0,
   items: [],
 };
@@ -9,7 +24,7 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addItem(state, action) {
+    addItem(state, action: PayloadAction<CartItem>) {
       const findItem = state.items.find(
         (obj) =>
           obj.title === action.payload.title &&
@@ -31,14 +46,14 @@ export const cartSlice = createSlice({
         0
       );
     },
-    minusItem(state, action) {
+    minusItem(state, action: PayloadAction<CartItem>) {
       const findItem = state.items.find(
         (obj) =>
           obj.title === action.payload.title &&
           obj.type === action.payload.type &&
           obj.size === action.payload.size
       );
-      if (findItem.count > 1) {
+      if (findItem && findItem.count > 1) {
         findItem.count--;
         state.totalPrice = state.items.reduce(
           (acc, item) => item.price * item.count + acc,
@@ -51,7 +66,7 @@ export const cartSlice = createSlice({
         );
       }
     },
-    removeItem(state, action) {
+    removeItem(state, action: PayloadAction<CartItem>) {
       state.items = state.items.filter(
         (obj) =>
           obj.title !== action.payload.title ||
@@ -70,9 +85,16 @@ export const cartSlice = createSlice({
   },
 });
 
-export const selectCart = (state) => state.cart;
+export const selectCart = (state: RootState) => state.cart;
 export const selectCartItem =
-  (title, sizes, activeSize, typeNames, activeType) => (state) =>
+  (
+    title: string,
+    sizes: number[],
+    activeSize: number,
+    typeNames: string[],
+    activeType: number
+  ) =>
+  (state: RootState) =>
     state.cart.items.find(
       (obj) =>
         obj.title === title &&
