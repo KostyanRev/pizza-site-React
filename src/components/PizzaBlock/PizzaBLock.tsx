@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem } from '../../redux/slices/cart/slice';
-import { selectCartItem } from '../../redux/slices/cart/selectors';
-import { CartItem } from '../../redux/slices/cart/types';
+import { addItem } from '../../redux/cart/slice';
+import { selectCartItem } from '../../redux/cart/selectors';
+import { CartItem } from '../../redux/cart/types';
 
 type PizzaBLockProps = {
   title: string;
