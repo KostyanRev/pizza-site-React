@@ -38,7 +38,21 @@ const PizzaBLock: React.FC<PizzaBLockProps> = ({
       size: sizes[activeSize],
       count: 0,
     };
+
     dispatch(addItem(item));
+  };
+
+  const calcPrice = () => {
+    price = activeType === 1 ? (price += 15) : price;
+
+    switch (activeSize) {
+      case 1:
+        return (price += 20);
+      case 2:
+        return (price += 30);
+      default:
+        return price;
+    }
   };
 
   return (
@@ -73,7 +87,7 @@ const PizzaBLock: React.FC<PizzaBLockProps> = ({
           </ul>
         </div>
         <div className="pizza-block__bottom">
-          <div className="pizza-block__price">от {price} ₽</div>
+          <div className="pizza-block__price">от {calcPrice()} ₴</div>
           <button className="button button--outline button--add">
             <svg
               width="12"
