@@ -4,8 +4,12 @@ import Header from './components/Header';
 
 import './scss/app.scss';
 import Home from './Pages/Home';
-import NotFound from './Pages/NotFound';
-import Cart from './Pages/Cart';
+import { Suspense, lazy } from 'react';
+
+const Cart = lazy(() => import(/*webpackChunkName: 'Cart'*/ './Pages/Cart'));
+const NotFound = lazy(
+  () => import(/*webpackChunkName: 'NotFound'*/ './Pages/NotFound')
+);
 
 function App() {
   return (
@@ -14,8 +18,24 @@ function App() {
       <div className="content">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="*" element={<NotFound />} />
+
+          <Route
+            path="/cart"
+            element={
+              <Suspense fallback={<div>"Идет загрузка корзины..."</div>}>
+                <Cart />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="*"
+            element={
+              <Suspense>
+                <NotFound />{' '}
+              </Suspense>
+            }
+          />
         </Routes>
       </div>
     </div>

@@ -119,6 +119,12 @@ body {
       margin: 0;
     }
   }
+
+  @media (max-width: 550px) {
+    &--cart {
+      margin: 40px auto;
+    }
+  }
 }
 
 .cart {
@@ -126,6 +132,23 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  @media (max-width: 550px) {
+    &__item {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 400px) {
+    &__top {
+      flex-direction: column;
+    }
+    &__clear {
+      margin-top: 20px;
+    }
   }
 
   .content__items {
@@ -147,6 +170,12 @@ body {
         stroke: $black;
         stroke-width: 1.9;
       }
+    }
+  }
+
+  @media (max-width: 550px) {
+    .content__title {
+      font-size: 28px;
     }
   }
 
@@ -204,6 +233,7 @@ body {
       display: flex;
       flex-direction: column;
       justify-content: center;
+      margin-left: 15px;
       width: 40%;
 
       h3 {
@@ -223,6 +253,7 @@ body {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin: 0 15px;
       width: 13%;
 
       &-minus {
@@ -253,6 +284,7 @@ body {
       }
 
       b {
+        margin: 0 10px;
         font-size: 22px;
       }
     }
@@ -301,6 +333,30 @@ body {
         }
       }
     }
+
+    @media (max-width: 550px) {
+      &-img {
+        margin-right: 0px;
+        justify-content: center;
+      }
+      &-info {
+        text-align: center;
+        margin-left: 0;
+      }
+
+      &-count {
+        margin: 10px 0;
+        justify-content: center;
+      }
+      &-remove {
+        justify-content: center;
+      }
+    }
+    @media (max-width: 340px) {
+      &-info {
+        width: 45%;
+      }
+    }
   }
 
   &__bottom {
@@ -318,6 +374,20 @@ body {
             color: $orange;
           }
         }
+      }
+
+      @media (max-width: 550px) {
+        span {
+          font-size: 20px;
+        }
+      }
+    }
+
+    @media (max-width: 425px) {
+      &-details {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
       }
     }
 
@@ -365,11 +435,24 @@ body {
         padding: 16px;
       }
     }
+
+    @media (max-width: 550px) {
+      &-buttons {
+        margin-top: 25px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .go-back-btn {
+          margin-bottom: 15px;
+        }
+      }
+    }
   }
 
   &--empty {
     margin: 80px auto;
-    width: 620px;
+    max-width: 620px;
     text-align: center;
 
     h2 {
@@ -402,6 +485,17 @@ body {
       margin: 0 auto;
       font-weight: 600;
       font-size: 18px;
+    }
+  }
+
+  @media (max-width: 470px) {
+    &--empty {
+      h2 {
+        font-size: 30px;
+      }
+      p {
+        font-size: 17px;
+      }
     }
   }
 }
